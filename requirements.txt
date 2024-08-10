@@ -1,0 +1,14 @@
+Flask
+eventlet
+Flask-SocketIO
+gunicorn
+numpy
+ultralytics
+torch
+torchvision
+requests
+tqdm
+google-cloud-storage
+flask-socketio
+opencv-python
+
