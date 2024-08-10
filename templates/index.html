@@ -17,7 +17,7 @@
     <div id="video-container">
         <div class="video-feed">
             <h2>Original Feed</h2>
-            <img id="original" width="100%" />
+            <video id="original" width="100%" autoplay></video>
         </div>
         <div class="video-feed">
             <h2>Processed Feed</h2>
@@ -27,10 +27,22 @@
 
     <script src="https://cdn.socket.io/4.5.4/socket.io.min.js"></script>
     <script>
+        // Set up the WebSocket connection
         const socket = io();
 
+        // Access the user's camera and set up the video element
+        navigator.mediaDevices.getUserMedia({ video: true })
+            .then(stream => {
+                const videoElement = document.getElementById('original');
+                videoElement.srcObject = stream;
+            })
+            .catch(error => {
+                console.error('Error accessing the camera:', error);
+            });
+
+        // Handle incoming video frames from the server
         socket.on('video_frame', function(data) {
-            document.getElementById('original').src = 'data:image/jpeg;base64,' + data.original;
+            // Display the processed feed
             document.getElementById('processed').src = 'data:image/jpeg;base64,' + data.processed;
         });
     </script>
